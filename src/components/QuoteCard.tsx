@@ -1,17 +1,13 @@
-import { cn } from '@/lib/utils'
-import React, { useContext } from 'react'
-import { Button } from './ui/button'
-import { FaRegHeart } from "react-icons/fa6";
+import { cn } from '@/lib/utils';
+import { addFav } from '@/redux/Slices/FavSlice';
 import toast from 'react-hot-toast';
-import favouriteContext from '@/context/favouriteContext';
+import { FaRegHeart } from "react-icons/fa6";
+import { useDispatch } from 'react-redux';
+import { Button } from './ui/button';
 
 const QuoteCard = ({ quote }) => {
-    // console.log(quote)
-    const colors = ["#DC143C"]
-    const { favouriteContainer, setFavouriteConatiner } = useContext(favouriteContext)
-    const idx = Math.floor((Math.random() * colors.length))
-    console.log(idx)
-    const handleCopy = async (text) => {
+    const dispatch = useDispatch()
+    const handleCopy = async (text: string) => {
 
         try {
             await navigator.clipboard.writeText(text)
@@ -21,21 +17,8 @@ const QuoteCard = ({ quote }) => {
         }
     }
     const handleFavourite = (item) => {
-        console.log(favouriteContainer)
-        if (!favouriteContainer) {
-            const container = []
-            container.push(item)
-            setFavouriteConatiner(container)
-            console.log(favouriteContainer)
-        }
-        else {
-            const isExits = favouriteContainer.find((quote) => quote._id === item._id)
-            if (isExits) return
-            const container = [...favouriteContainer]
-            container.push(item)
-            setFavouriteConatiner(container)
-            console.log(favouriteContainer)
-        }
+        dispatch(addFav(item))
+
         toast.success("Add to Favourite")
     }
     return (

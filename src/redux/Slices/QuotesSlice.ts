@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { log } from "console";
 
 export const STATUSES = Object.freeze({
   IDLE: "idle",
@@ -42,26 +41,20 @@ export const fetchQuotes = createAsyncThunk(
   }) => {
     try {
       if (author) {
-        console.log("the author is " + author);
+        
         const response = await axios.get(
           `/api/quotes?page=${page}&author=${author}`
         );
-        console.log(response.data);
         return response.data;
       } else if (category) {
-        console.log("the category is " + category);
 
-        console.log("insode ther csda");
         const response = await axios.get(
           `/api/quotes?page=${page}&category=${category}`
         );
-        console.log(response.data);
         return response.data;
       } else {
-        console.log("the pagee is " + page);
         const response = await axios.get(`/api/quotes?page=${page}`);
 
-        console.log(response.data);
         return response.data;
       }
     } catch (error) {

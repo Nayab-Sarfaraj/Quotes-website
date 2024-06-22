@@ -1,47 +1,43 @@
-import { Toaster } from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Navbar from "./components/Navbar";
+import favouriteContext from "./context/favouriteContext";
 import Category from "./screen/Category";
 import Favourite from "./screen/Favourite";
 import Home from "./screen/Home";
 import Quotes from "./screen/Quotes";
 import Search from "./screen/Search";
-import { useEffect, useState } from "react";
-import favouriteContext from "./context/favouriteContext";
-import { json } from "stream/consumers";
 function App() {
-  const [favouriteContainer, setFavouriteConatiner] = useState([])
-  const getFav = async () => {
-    try {
-      const container = await localStorage.getItem("fav")
-      setFavouriteConatiner(JSON.parse(container))
-      console.log(favouriteContainer)
-    } catch (error) {
-      console.log("error while fetching the item ", error)
-    }
-  }
-  useEffect(() => {
-    getFav()
-  }, [])
-  const setFav = async () => {
-    try {
+  // const [favouriteContainer, setFavouriteConatiner] = useState([])
+  // const getFav = async () => {
+  //   try {
+  //     const container = await localStorage.getItem("fav")
+  //     setFavouriteConatiner(JSON.parse(container))
+  //   } catch (error) {
+  //     console.log("error while fetching the item ", error)
+  //   }
+  // }
+  // useEffect(() => {
+  //   getFav()
+  // }, [])
+  // const setFav = async () => {
+  //   try {
 
-      await localStorage.setItem("fav", JSON.stringify(favouriteContainer))
-      console.log(favouriteContainer)
-    } catch (error) {
-      console.log("error while setting the item " + error);
+  //     await localStorage.setItem("fav", JSON.stringify(favouriteContainer))
+  //   } catch (error) {
+  //     console.log("error while setting the item " + error);
 
-    }
-  }
-  useEffect(() => {
-    setFav()
-  }, [favouriteContainer])
+  //   }
+  // }
+  // useEffect(() => {
+  //   setFav()
+  // }, [favouriteContainer])
   return (
     <div className="bg-[#121928] min-h-screen mx-auto">
 
       <Router>
         <Navbar />
-        <favouriteContext.Provider value={{ favouriteContainer, setFavouriteConatiner }}>
+        {/* <favouriteContext.Provider value={{ favouriteContainer, setFavouriteConatiner }}> */}
 
 
 
@@ -57,7 +53,7 @@ function App() {
 
             <Route path="/quotes/category/:category" element={<Quotes></Quotes>}></Route>
           </Routes>
-        </favouriteContext.Provider>
+        {/* </favouriteContext.Provider> */}
       </Router>
     </div>
   )

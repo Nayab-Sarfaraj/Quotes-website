@@ -1,5 +1,4 @@
-import { log } from 'console';
-import React, { useState } from 'react'
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
@@ -8,8 +7,6 @@ const Search = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(author);
-
         author && navigate(`/quotes/${author}`)
 
     }

@@ -25,9 +25,9 @@ const Category = () => {
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 mt-10 pb-8 place-items-center mx-10 sm:mx-3'>
       {
-        categories.map((category) => {
+        categories.map((category, index) => {
           return (
-            <Link to={`/quotes/category/${category.title}`}>
+            <Link to={`/quotes/category/${category.title}`} key={index}>
               <div className='w-64 h-20 bg-[#DC143C] rounded-lg flex items-end mx-4'>
                 <h3 className='text-xl text-white pl-5 pb-10'>{category.title}</h3>
               </div>
