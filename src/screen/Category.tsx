@@ -28,8 +28,7 @@ const Category = () => {
         categories.map((category) => {
           return (
             <Link to={`/quotes/category/${category.title}`}>
-              <div className='lg:w-96 w-72 h-60 bg-sky-600 rounded-lg flex items-end mx-4'>
-
+              <div className='w-64 h-20 bg-[#DC143C] rounded-lg flex items-end mx-4'>
                 <h3 className='text-xl text-white pl-5 pb-10'>{category.title}</h3>
               </div>
 

@@ -4,12 +4,13 @@ import App from './App.tsx'
 import './index.css'
 import { Toaster } from 'react-hot-toast'
 // import { Provider } from 'react-redux'
-// import store from "./redux/store.js"
+import store from "./redux/store.js"
+import { Provider } from 'react-redux'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
+    <Provider store={store}>
     <Toaster />
       <App />
-    {/* </Provider> */}
+    </Provider>
   </React.StrictMode>,
 )
