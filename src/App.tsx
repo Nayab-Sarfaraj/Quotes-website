@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Navbar from "./components/Navbar";
-import favouriteContext from "./context/favouriteContext";
 import Category from "./screen/Category";
 import Favourite from "./screen/Favourite";
 import Home from "./screen/Home";
