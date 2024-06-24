@@ -1,6 +1,27 @@
 const Quote = require("../models/quoteSchema");
 const ErrorHandler = require("../utils/errorHandler");
 const apiFeatures = require("../utils/features");
+const getAllQuotes = async (req, res, next) => {
+  try {
+    const quotes = await Quote.find();
+    const noOfQuotes = quotes.reduce((acc, curr) => acc + 1, 0);
+    const authors = {};
+    quotes.forEach((quote) => {
+      const author = quote.author;
+      authors[author] = author;
+    });
+    const authorArr = Object.keys(authors);
+    const noOfAuthor = authorArr.length;
+    return res.json({
+      quotes,
+      noOfQuotes,
+      authorArr,
+      noOfAuthor,
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 401));
+  }
+};
 const createQuote = async (req, res, next) => {
   try {
     const { quote, category } = req.body;
@@ -69,4 +90,5 @@ module.exports = {
   getQuotes,
   deleteQuote,
   updateQuote,
+  getAllQuotes,
 };
