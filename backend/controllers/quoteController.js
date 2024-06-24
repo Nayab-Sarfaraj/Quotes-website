@@ -3,8 +3,8 @@ const ErrorHandler = require("../utils/errorHandler");
 const apiFeatures = require("../utils/features");
 const createQuote = async (req, res, next) => {
   try {
-    const { text, category } = req.body;
-    if (!text) return next(new ErrorHandler("Text is required", 401));
+    const { quote, category } = req.body;
+    if (!quote) return next(new ErrorHandler("Text is required", 401));
     if (!category) return next(new ErrorHandler("Category is required", 402));
     const newQuote = await Quote(req.body);
     const savedQuote = await newQuote.save();
@@ -40,11 +40,9 @@ const getQuotes = async (req, res, next) => {
 const deleteQuote = async (req, res, next) => {
   try {
     console.log(req.params.id);
-    // console.log(req.query);
     const id = req.params.id;
     if (!id) return next(new ErrorHandler("Id is required", 401));
     const quote = await Quote.findByIdAndDelete(id);
-    console.log(quote);
     return res.json(quote);
   } catch (error) {
     console.log("error is :", error);

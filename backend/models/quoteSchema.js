@@ -1,12 +1,12 @@
 const mongoose=require("mongoose")
 const quotesSchema = mongoose.Schema({
-  text: {
+  quote: {
     type: String,
     required: true,
   },
   author: {
     type: String,
-    default:null
+    default: null,
   },
   category: {
     type: String,

@@ -1,4 +1,3 @@
-// const e = require("express");
 
 class ErrorHandler extends Error {
   constructor(message, status) {
