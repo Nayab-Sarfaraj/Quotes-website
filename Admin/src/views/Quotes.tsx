@@ -16,8 +16,11 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import Loader from '@/components/Loader';
 import { fetchQuotes } from '@/redux/slices/QuotesSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Quotes = () => {
+    const naviagte = useNavigate()
     const dispatch = useDispatch()
     const quotes = useSelector(state => state.quotes.data.quotes)
     const [isLoading, setIsLoading] = useState(true)
@@ -38,7 +41,7 @@ const Quotes = () => {
         }
     }
     return (
-        isLoading ? <Loader /> : (<div>
+        isLoading ? <Loader /> : (<ScrollArea className='w-auto h-screen'>
             <Table>
                 <TableCaption>A list of all quotes.</TableCaption>
                 <TableHeader>
@@ -47,21 +50,21 @@ const Quotes = () => {
                         <TableHead>Quote</TableHead>
                         <TableHead>Category</TableHead>
                         <TableHead className="text-right">Author</TableHead>
-                        <TableHead>Edit</TableHead>
+                        <TableHead>Edit  and  Delete</TableHead>
 
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {
-                        quotes?.map((quote) => {
+                        quotes?.map((quote, index) => {
                             return (
-                                <TableRow>
+                                <TableRow key={index}>
                                     <TableCell className="font-medium">{quote._id}</TableCell>
                                     <TableCell>{quote.quote}</TableCell>
                                     <TableCell>{quote.category}</TableCell>
                                     <TableCell className="text-right">{quote.author}</TableCell>
-                                    <TableCell className='flex items-center justify-center gap-5'>
-                                        <Button variant={"ghost"}>
+                                    <TableCell className='flex items-center justify-center gap-1'>
+                                        <Button variant={"ghost"} onClick={(e) => naviagte(`/admin/quotes/create/${quote._id}`)}>
 
                                             <FaEdit size={18} />
                                         </Button>
@@ -78,7 +81,7 @@ const Quotes = () => {
                 </TableBody>
             </Table>
 
-        </div>)
+        </ScrollArea>)
     )
 }
 

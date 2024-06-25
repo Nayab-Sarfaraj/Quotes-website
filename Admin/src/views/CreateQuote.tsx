@@ -1,45 +1,103 @@
-import { Input } from '@/components/ui/input'
-import React, { useState } from 'react'
-import { Textarea } from "@/components/ui/textarea"
+import Loader from '@/components/Loader'
 import { Button } from '@/components/ui/button'
-import { useDispatch } from 'react-redux'
+import { Input } from '@/components/ui/input'
+import { Textarea } from "@/components/ui/textarea"
 import { createQuote } from '@/redux/slices/CreateQuoteSlice'
+import { fetchSingleQuote } from '@/redux/slices/SingleQuoteSlice'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const CreateQuote = () => {
+    const params = useParams()
+    const id = params?.id
     const [quote, setQuote] = useState("")
     const [category, setCategory] = useState("")
     const [author, setAuthor] = useState("")
     const dispatch = useDispatch()
     const naviagte = useNavigate()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const fetchedQuote = useSelector(state => state.singleQuote?.data?.quote)
+
+    useEffect(() => {
+        if (id)
+            dispatch(fetchSingleQuote(id))
+
+    }, [id])
+
+    useEffect(() => {
+        if (fetchedQuote) {
+            setAuthor(fetchedQuote.author)
+            setCategory(fetchedQuote.category)
+            setQuote(fetchedQuote.quote)
+
+        }
+    }, [fetchedQuote, id])
     const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(quote, category, author)
-        dispatch(createQuote({ quote, category, author }))
-        setAuthor("")
-        setCategory("")
-        setQuote("")
-        toast.success("Created 200 🤗")
-        naviagte("/admin/quotes/all")
+        try {
+            setIsLoading(true)
+            e.preventDefault()
+            console.log(quote, category, author)
+            if (!quote || !category || !author) {
+                console.log("herer");
+
+                toast.error("Please fill all the input")
+                return
+            }
+            dispatch(createQuote({ quote, category, author }))
+            setAuthor("")
+            setCategory("")
+            setQuote("")
+
+            toast.success("Created 200 🤗")
+            setIsLoading(false)
+            naviagte("/admin/quotes/all")
+        } catch (error) {
+            console.log("error in the component : " + error)
+            toast.error(error.message)
+        }
+    }
+    const handleUpdate = async (e) => {
+        try {
+            setIsLoading(true)
+            e.preventDefault()
+            const response = await axios.patch(`/api/quotes/${fetchedQuote._id}`, { quote, category, author })
+            console.log(response.data)
+            setIsLoading(false)
+            toast.success("Edited successfully")
+            setAuthor("")
+            setCategory("")
+            setQuote("")
+            naviagte("/admin/quotes/all")
+
+        } catch (error) {
+            console.log("error in the component update : " + error)
+            toast.error(error.message)
+        }
     }
     return (
-        <div className='flex h-screen items-center flex-col w-[80vw]  p-10 gap-5 justify-center'>
+
+        isLoading ? <Loader /> : <div className='flex h-screen items-center flex-col w-[80vw]  p-10 gap-5 justify-center'>
             <div className='bg-[azure] p-10 rounded-md'>
 
-                <h1 className='text-xl mb-3 text-center font-semibold   '>Create Quote</h1>
+                <h1 className='text-xl mb-3 text-center font-semibold   '>{
+                    id ? "Edit Quote" : "Create Quote"
+                }</h1>
                 <form className='flex flex-col items-center gap-10 ' onSubmit={(e) => handleSubmit(e)}>
                     <Textarea placeholder='Quote' value={quote} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setQuote(e.target.value)} />
                     <Input type='text' placeholder='Author' value={author} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setAuthor(e.target.value)} />
                     <Input type='text' placeholder='Category'
                         value={category} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setCategory(e.target.value)}
                     />
-                    <Button variant={'outline'} onClick={(e) => handleSubmit(e)}>Submit</Button>
+                    <Button variant={'outline'} onClick={(e) => id ? handleUpdate(e) : handleSubmit(e)}>{id ? "Edit" : "Submit"}</Button>
 
                 </form>
             </div>
 
         </div>
+
     )
 }
 

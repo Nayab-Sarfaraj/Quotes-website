@@ -9,6 +9,7 @@ router.post(
   quoteController.createQuote
 );
 router.get("/quotes", quoteController.getQuotes);
+router.get("/quotes/:id", quoteController.getSingleQuote);
 router.delete(
   "/quotes/:id",
   // isAuthenticated,
@@ -17,8 +18,8 @@ router.delete(
 );
 router.patch(
   "/quotes/:id",
-  isAuthenticated,
-  authenticateRole,
+  // isAuthenticated,
+  // authenticateRole,
   quoteController.updateQuote
 );
 

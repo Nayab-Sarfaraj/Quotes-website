@@ -7,6 +7,8 @@ import { fetchQuotes } from './redux/slices/QuotesSlice';
 import CreateQuote from './views/CreateQuote';
 import Home from './views/Home';
 import Quotes from './views/Quotes';
+import Loader from './components/Loader';
+import DataTable from './components/DataTable';
 
 function App() {
   const dispatch = useDispatch()
@@ -32,7 +34,9 @@ function App() {
             <Route path='/' element={<Home />}></Route>
             <Route path='/admin/quotes/all' element={<Quotes />}></Route>
             <Route path='/admin/quotes/create' element={<CreateQuote />}></Route>
-
+            <Route path='/admin/quotes/create/:id' element={<CreateQuote />}></Route>
+            <Route path='/admin/author/:author' element={<DataTable />}></Route>
+            <Route path='/admin/category/:category' element={<DataTable />}></Route>
           </Routes>
         </div>
 

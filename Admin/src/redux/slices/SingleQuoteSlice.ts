@@ -8,35 +8,31 @@ export const STATUSES = Object.freeze({
   LOADING: "loading",
 });
 
-const createQuotesSlice = createSlice({
-  name: "newQuote",
+const singleQuote = createSlice({
+  name: "singleQuote",
   initialState: {
     data: [],
     status: STATUSES.IDLE,
   },
   extraReducers: (builder) => {
-    builder.addCase(createQuote.fulfilled, (state, action) => {
+    builder.addCase(fetchSingleQuote.fulfilled, (state, action) => {
       state.data = action.payload;
       console.log(action.payload);
       state.status = STATUSES.SUCCESS;
     });
-    builder.addCase(createQuote.pending, (state, action) => {
+    builder.addCase(fetchSingleQuote.pending, (state, action) => {
       state.status = STATUSES.LOADING;
     });
-    builder.addCase(createQuote.rejected, (state, action) => {
+    builder.addCase(fetchSingleQuote.rejected, (state, action) => {
       state.status = STATUSES.ERROR;
     });
   },
 });
-export const createQuote = createAsyncThunk(
-  "createQuote",
-  async ({ author, category, quote }) => {
+export const fetchSingleQuote = createAsyncThunk(
+  "fetchSingleQuote",
+  async (id ) => {
     try {
-      const response = await axios.post("/api/quotes", {
-        author,
-        category,
-        quote,
-      });
+      const response = await axios.get(`/api/quotes/${id}`);
       return response.data;
     } catch (error) {
       console.log("error while fetching the quotes : ", error);
@@ -45,4 +41,4 @@ export const createQuote = createAsyncThunk(
   }
 );
 
-export default createQuotesSlice.reducer;
+export default singleQuote.reducer;
