@@ -17,7 +17,6 @@ const authorCategorySlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchSearchItem.fulfilled, (state, action) => {
       state.data = action.payload;
-      console.log(action.payload);
       state.status = STATUSES.SUCCESS;
     });
     builder.addCase(fetchSearchItem.pending, (state, action) => {
@@ -33,13 +32,11 @@ export const fetchSearchItem = createAsyncThunk(
   async ({ author, category }) => {
     try {
       if (author) {
-        console.log("the searched author is : " + author);
 
         const response = await axios.get(`/api/admin/quotes?author=${author}`);
         return response.data;
       }
       if (category) {
-        console.log("the searched category is : " + category);
         const response = await axios.get(
           `/api/admin/quotes?category=${category}`
         );

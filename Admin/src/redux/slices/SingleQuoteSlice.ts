@@ -17,7 +17,6 @@ const singleQuote = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchSingleQuote.fulfilled, (state, action) => {
       state.data = action.payload;
-      console.log(action.payload);
       state.status = STATUSES.SUCCESS;
     });
     builder.addCase(fetchSingleQuote.pending, (state, action) => {

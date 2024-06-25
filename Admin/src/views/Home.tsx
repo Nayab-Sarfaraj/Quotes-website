@@ -1,5 +1,3 @@
-import React from 'react'
-import { LoaderIcon } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import AuthorTable from './AuthorTable'
 import CategoryTable from './CategoryTable'
@@ -8,7 +6,6 @@ const Home = () => {
   const { quotes } = useSelector(state => state?.quotes?.data)
   const { authorArr } = useSelector(state => state?.quotes?.data)
   const { categoryArr } = useSelector(state => state?.quotes?.data)
-  console.log(quotes)
   return (
     <div className='text-black ml-5 w-[80vw] h-screen'>
       <h1 className='text-center text-2xl my-5 font-bold'>Dashboard</h1>

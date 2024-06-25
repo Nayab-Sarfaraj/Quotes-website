@@ -2,9 +2,8 @@ import Loader from '@/components/Loader'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from "@/components/ui/textarea"
-import { createQuote } from '@/redux/slices/CreateQuoteSlice'
+import { createQuote, editQuote } from '@/redux/slices/CreateQuoteSlice'
 import { fetchSingleQuote } from '@/redux/slices/SingleQuoteSlice'
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
@@ -39,9 +38,7 @@ const CreateQuote = () => {
         try {
             setIsLoading(true)
             e.preventDefault()
-            console.log(quote, category, author)
             if (!quote || !category || !author) {
-                console.log("herer");
 
                 toast.error("Please fill all the input")
                 return
@@ -63,8 +60,8 @@ const CreateQuote = () => {
         try {
             setIsLoading(true)
             e.preventDefault()
-            const response = await axios.patch(`/api/quotes/${fetchedQuote._id}`, { quote, category, author })
-            console.log(response.data)
+
+            const response = await dispatch(editQuote({ id, quote, category, author }))
             setIsLoading(false)
             toast.success("Edited successfully")
             setAuthor("")

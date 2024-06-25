@@ -1,16 +1,15 @@
-import React from 'react'
 
-import { IoStatsChart } from "react-icons/io5";
 import { FaSitemap } from "react-icons/fa6";
-import SidebarItem from './SidebarItem';
+import { IoStatsChart } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
+import SidebarItem from './SidebarItem';
 
 const SidebarRoutes = () => {
     const adminRoutes = [
         {
             title: "Dashboard",
             icon: MdDashboard,
-            href: "/"
+            href: "/admin/dashboard"
         }
         , {
             title: "Quotes",

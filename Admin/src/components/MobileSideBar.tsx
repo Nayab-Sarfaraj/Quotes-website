@@ -1,18 +1,10 @@
-import { Button } from "@/components/ui/button"
-import { GrMenu } from "react-icons/gr";
-import { ImMenu } from "react-icons/im";
 import { SlMenu } from "react-icons/sl";
 
 import {
     Sheet,
-    SheetClose,
     SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet"
+    SheetTrigger
+} from "@/components/ui/sheet";
 import SideBar from "./SideBar";
 
 const MobileSideBar = () => {

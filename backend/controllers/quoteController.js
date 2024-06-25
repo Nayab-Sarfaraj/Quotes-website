@@ -8,7 +8,7 @@ const getAllQuotes = async (req, res, next) => {
       .auhtor();
 
     const quotes = await apifeature.query;
-    
+
     const authors = {};
     const categories = {};
     quotes.forEach((quote) => {
@@ -79,7 +79,7 @@ const deleteQuote = async (req, res, next) => {
 const updateQuote = async (req, res, next) => {
   try {
     const id = req.params.id;
-
+    console.log(req.params);
     if (!id) return next(new ErrorHandler("Id is required", 401));
 
     const quote = await Quote.findByIdAndUpdate(id, req.body, { new: true });
